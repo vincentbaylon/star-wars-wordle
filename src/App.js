@@ -16,7 +16,6 @@ function App() {
 	useEffect(() => {
 		let randomWord = words[Math.floor(Math.random() * words.length)]
 		setCurrentWord(randomWord)
-		console.log(randomWord)
 	}, [])
 
 	const handleDelete = () => {
@@ -32,29 +31,64 @@ function App() {
 				if (currentGuess === currentWord) {
 					setGameStatus('WIN')
 				} else {
+					let colors = 'WWWWW'
+
+					let hash = {}
+
+					for (const char of currentWord.split('')) {
+						hash[char] = (hash[char] || 0) + 1
+					}
+
 					for (let i = 0; i < currentGuess.length; i++) {
-						if (currentGuess[i] === currentWord[i]) {
+						if (hash[currentGuess[i]] && currentGuess[i] === currentWord[i]) {
 							letters[currentGuess[i]].correct = true
-						} else if (currentWord.indexOf(currentGuess[i]) !== -1) {
-							letters[currentGuess[i]].present = true
-						} else {
-							letters[currentGuess[i]].absent = true
+							hash[currentGuess[i]]--
+							colors = colors.split('')
+							colors[i] = 'G'
+							colors = colors.join('')
+							console.log('G', colors)
 						}
 					}
 
-					console.log(letters)
-					setGuesses([...guesses, currentGuess])
+					for (let i = 0; i < currentGuess.length; i++) {
+						if (
+							hash[currentGuess[i]] &&
+							currentWord.indexOf(currentGuess[i]) !== -1
+						) {
+							letters[currentGuess[i]].present = true
+							hash[currentGuess[i]]--
+							colors = colors.split('')
+							colors[i] = 'Y'
+							colors = colors.join('')
+							console.log('Y', colors)
+						} else if (colors[i] === 'W' && hash[currentGuess[i]] === 0) {
+							colors = colors.split('')
+							colors[i] = 'S'
+							colors = colors.join('')
+							console.log('Z', colors)
+						} else if (
+							colors[i] === 'W' &&
+							currentWord.indexOf(currentGuess[i]) === -1
+						) {
+							letters[currentGuess[i]].absent = true
+							colors = colors.split('')
+							colors[i] = 'S'
+							colors = colors.join('')
+							console.log('S', colors)
+						}
+					}
+					console.log(colors)
+					setGuesses([...guesses, `${currentGuess}-${colors}`])
 					setCurrentGuess('')
+					console.log(guesses)
 				}
-			} else {
 			}
 		}
 	}
 
 	const handleChar = (c) => {
 		if (currentGuess.length < 5 && guesses.length < 7) {
-			let current = currentGuess + c
-			setCurrentGuess(current)
+			setCurrentGuess(`${currentGuess}${c}`)
 		}
 	}
 
@@ -77,7 +111,7 @@ function App() {
 		return () => {
 			window.removeEventListener('keyup', listener)
 		}
-	}, [])
+	}, [handleChar, handleEnter, handleDelete])
 
 	const handleClick = (e) => {
 		if (e.target.value === 'ENTER') {
@@ -143,10 +177,16 @@ function App() {
 	})
 
 	const displayRows = guesses.map((g, i) => {
+		let split = ['']
+
+		if (g.length > 0) {
+			split = g.split('-')
+		}
+
 		return (
 			<div key={i} className='flex flex-row gap-1'>
-				{g.split('').map((e) => {
-					if (letters[e].correct === true) {
+				{split[0].split('').map((e, i) => {
+					if (split[1][i] === 'G') {
 						return (
 							<div
 								key={e}
@@ -155,7 +195,7 @@ function App() {
 								<h1 className='text-white'>{e}</h1>
 							</div>
 						)
-					} else if (letters[e].present === true) {
+					} else if (split[1][i] === 'Y') {
 						return (
 							<div
 								key={e}
@@ -164,7 +204,7 @@ function App() {
 								<h1 className='text-white'>{e}</h1>
 							</div>
 						)
-					} else if (letters[e].absent === true) {
+					} else if (split[1][i] === 'S') {
 						return (
 							<div
 								key={e}
