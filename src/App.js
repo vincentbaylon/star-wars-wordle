@@ -283,7 +283,7 @@ function App() {
 					<button
 						key={e}
 						value={e}
-						className='h-8 w-6 md:h-10 md:w-8 lg:h-12 lg:w-10 rounded-sm text-white bg-green-500 font-semibold drop-shadow-lg'
+						className='h-10 w-6 md:h-12 md:w-10 lg:h-12 lg:w-10 rounded-sm text-white bg-green-500 font-semibold drop-shadow-lg'
 						onClick={handleClick}
 					>
 						{e}
@@ -294,7 +294,7 @@ function App() {
 					<button
 						key={e}
 						value={e}
-						className='h-8 w-6 md:h-10 md:w-8 lg:h-12 lg:w-10 rounded-sm text-white bg-yellow-500 font-semibold drop-shadow-lg'
+						className='h-10 w-6 md:h-12 md:w-10 lg:h-12 lg:w-10 rounded-sm text-white bg-yellow-500 font-semibold drop-shadow-lg'
 						onClick={handleClick}
 					>
 						{e}
@@ -305,7 +305,7 @@ function App() {
 					<button
 						key={e}
 						value={e}
-						className='h-8 w-6 md:h-10 md:w-8 lg:h-12 lg:w-10 rounded-sm text-white bg-slate-900 font-semibold drop-shadow-lg'
+						className='h-10 w-6 md:h-12 md:w-10 lg:h-12 lg:w-10 rounded-sm text-white bg-slate-900 font-semibold drop-shadow-lg'
 						onClick={handleClick}
 					>
 						{e}
@@ -316,7 +316,7 @@ function App() {
 					<button
 						key={e}
 						value={e}
-						className='h-8 w-6 md:h-10 md:w-8 lg:h-12 lg:w-10 rounded-sm text-white bg-slate-500 font-semibold drop-shadow-lg'
+						className='h-10 w-6 md:h-12 md:w-10 lg:h-12 lg:w-10 rounded-sm text-white bg-slate-500 font-semibold drop-shadow-lg'
 						onClick={handleClick}
 					>
 						{e}
@@ -381,7 +381,7 @@ function App() {
 				<div className='flex flex-row gap-1'>
 					<button
 						value='ENTER'
-						className='h-8 w-14 md:h-10 md:w-14 lg:h-12 lg:w-16 rounded-sm text-white bg-slate-500 font-semibold drop-shadow-lg'
+						className='h-10 w-14 md:h-12 md:w-14 lg:h-12 lg:w-16 rounded-sm text-white bg-slate-500 font-semibold drop-shadow-lg'
 						onClick={handleClick}
 					>
 						ENTER
@@ -389,7 +389,7 @@ function App() {
 					{displayRow(thirdRow)}
 					<button
 						value='DELETE'
-						className='h-8 w-12 md:h-10 md:w-14 lg:h-12 lg:w-16 rounded-sm text-white bg-slate-500 font-semibold drop-shadow-lg'
+						className='h-10 w-12 md:h-12 md:w-14 lg:h-12 lg:w-16 rounded-sm text-white bg-slate-500 font-semibold drop-shadow-lg'
 						onClick={handleClick}
 					>
 						DEL
