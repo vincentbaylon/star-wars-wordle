@@ -369,10 +369,10 @@ function App() {
 					{displayEmptyRows}
 				</div>
 			</div>
-			<div className='p-5 absolute bottom-0 items-center flex flex-col gap-1'>
-				<div className='flex flex-row gap-1'>{displayRow(firstRow)}</div>
-				<div className='flex flex-row gap-1'>{displayRow(secondRow)}</div>
-				<div className='flex flex-row gap-1'>
+			<div className='p-5 absolute bottom-0 items-center flex flex-col gap-2'>
+				<div className='flex flex-row gap-2'>{displayRow(firstRow)}</div>
+				<div className='flex flex-row gap-2'>{displayRow(secondRow)}</div>
+				<div className='flex flex-row gap-2'>
 					<button
 						value='ENTER'
 						className='h-10 w-14 md:h-12 md:w-14 lg:h-12 lg:w-16 rounded-sm text-white bg-slate-500 font-semibold drop-shadow-lg'
