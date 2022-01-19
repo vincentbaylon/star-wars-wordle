@@ -33,3 +33,8 @@ code {
 	background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
 	background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
 }
+
+.mobile-height {
+	height: 100vh;
+	height: calc(var(--vh, 1vh) * 100);
+}

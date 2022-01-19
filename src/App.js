@@ -52,6 +52,16 @@ function App() {
 		if (Object.keys(checkHash).length !== 5) {
 			setRepeat(true)
 		}
+
+		let vh = window.innerHeight * 0.01
+
+		document.documentElement.style.setProperty('--vh', `${vh}px`)
+
+		window.addEventListener('resize', () => {
+			// We execute the same script as before
+			let vh = window.innerHeight * 0.01
+			document.documentElement.style.setProperty('--vh', `${vh}px`)
+		})
 	}, [])
 
 	useEffect(() => {
@@ -334,7 +344,7 @@ function App() {
 	}
 
 	return (
-		<div className='flex flex-col items-center justify-center h-full min-h-screen star-background relative'>
+		<div className='flex flex-col items-center justify-center h-full min-h-screen star-background relative mobile-height'>
 			<div className='p-5 absolute top-0 flex flex-row justify-center'>
 				<h1 className='text-xl md:text-4xl font-bold text-slate-300 pr-10'>
 					STAR WARS WORDLE
