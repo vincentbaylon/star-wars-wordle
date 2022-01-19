@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import Modal from './Modal'
+import InfoModal from './InfoModal'
 import './App.css'
 import words from './Words'
 import letters from './Letters'
+import { RiQuestionLine } from 'react-icons/ri'
 
 function App() {
 	const [modalIsOpen, setModalIsOpen] = useState(false)
+	const [infoModalIsOpen, setInfoModalIsOpen] = useState(false)
 	const [currentWord, setCurrentWord] = useState('')
 	const [currentGuess, setCurrentGuess] = useState('')
 	const [guesses, setGuesses] = useState([currentGuess])
@@ -322,11 +325,28 @@ function App() {
 			}
 		})
 
+	const handleInfo = () => {
+		setInfoModalIsOpen(true)
+	}
+
+	const closeInfoModal = () => {
+		setInfoModalIsOpen(false)
+	}
+
 	return (
 		<div className='flex flex-col items-center justify-center h-full min-h-screen star-background relative'>
-			<h1 className='p-5 text-xl md:text-4xl font-bold text-slate-300 absolute top-0'>
-				STAR WARS WORDLE
-			</h1>
+			<div className='p-5 absolute top-0 flex flex-row justify-center'>
+				<h1 className='text-xl md:text-4xl font-bold text-slate-300 pr-10'>
+					STAR WARS WORDLE
+				</h1>
+				<button
+					className='text-lg hover:cursor-pointer z-50'
+					onClick={handleInfo}
+				>
+					<RiQuestionLine size={27} color='gray' />
+				</button>
+			</div>
+
 			{repeat ? (
 				<h1 className='p-5 text-md md:text-lg font-medium text-slate-400 absolute top-14'>
 					Two or more characters of current word repeat.
@@ -340,6 +360,11 @@ function App() {
 						currentWord={currentWord}
 						guesses={guesses}
 					/>
+				</div>
+			) : null}
+			{infoModalIsOpen ? (
+				<div className='absolute top-20'>
+					<InfoModal closeInfoModal={closeInfoModal} />
 				</div>
 			) : null}
 

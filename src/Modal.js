@@ -32,7 +32,7 @@ function Modal({ gameStatus, closeModal, currentWord, guesses }) {
 	}
 
 	return (
-		<div className='h-80 w-80 bg-slate-700 z-50 rounded-md shadow-lg flex flex-col justify-center text-center relative items-center top-0'>
+		<div className='h-80 w-80 bg-slate-700 z-50 rounded-md shadow-lg flex flex-col justify-center text-center relative items-center top-0 border-2 border-slate-600'>
 			{console.log(guesses)}
 			{gameStatus === 'WIN' ? (
 				<>
@@ -48,15 +48,16 @@ function Modal({ gameStatus, closeModal, currentWord, guesses }) {
 				</>
 			) : (
 				<>
-					<h1 className='font-bold text-lg absolute top-0 p-5'>
+					<h1 className='font-bold text-xl text-slate-300 absolute top-0 p-5'>
 						"You still hanging around with this loser?"
 					</h1>
-					<h1 className='font-semibold'>The word was {currentWord}</h1>
+					<h1 className='font-semibold text-slate-300'>The word was </h1>
+					<h1 className='font-bold text-lg text-red-500'>{currentWord}</h1>
 				</>
 			)}
 
 			<button
-				className='hover:text-sky-400 text-slate-300 font-semibold absolute bottom-0 p-2'
+				className='hover:text-green-500 text-slate-300 font-semibold absolute bottom-0 p-2'
 				onClick={closeModal}
 			>
 				Try Again
