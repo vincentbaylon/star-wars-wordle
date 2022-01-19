@@ -16,6 +16,26 @@ function App() {
 	const secondRow = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L']
 	const thirdRow = ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
 
+	const closeModal = () => {
+		let randomWord = words[Math.floor(Math.random() * words.length)]
+		setCurrentWord(randomWord)
+
+		let checkHash = {}
+
+		for (const char of randomWord.split('')) {
+			checkHash[char] = (checkHash[char] || 0) + 1
+		}
+
+		if (Object.keys(checkHash).length !== 5) {
+			setRepeat(true)
+		}
+
+		setModalIsOpen(false)
+		setCurrentGuess('')
+		setGuesses([''])
+		setGameStatus('')
+	}
+
 	useEffect(() => {
 		let randomWord = words[Math.floor(Math.random() * words.length)]
 		setCurrentWord(randomWord)
@@ -36,10 +56,6 @@ function App() {
 			setModalIsOpen(true)
 		}
 	}, [gameStatus])
-
-	const closeModal = () => {
-		setModalIsOpen(false)
-	}
 
 	const handleDelete = () => {
 		if (gameStatus === '') {

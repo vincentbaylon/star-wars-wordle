@@ -1,4 +1,8 @@
+import { useState } from 'react'
+
 function Modal({ gameStatus, closeModal, currentWord, guesses }) {
+	const [copied, setCopied] = useState(false)
+
 	const newGuesses = guesses.slice(1)
 
 	const createEmojiGrid = newGuesses.map((g) => {
@@ -24,6 +28,7 @@ function Modal({ gameStatus, closeModal, currentWord, guesses }) {
 				'\n'
 			)}\n🟩🟩🟩🟩🟩`
 		)
+		setCopied(true)
 	}
 
 	return (
@@ -38,7 +43,7 @@ function Modal({ gameStatus, closeModal, currentWord, guesses }) {
 						className='bg-green-600 hover:bg-green-700 text-slate-300 h-10 w-20 rounded-md font-semibold'
 						onClick={handleShare}
 					>
-						SHARE
+						{copied ? 'COPIED' : 'SHARE'}
 					</button>
 				</>
 			) : (
