@@ -7,7 +7,7 @@ function InfoModal({ closeInfoModal }) {
 				<RiCloseLine size={25} className='text-slate-400' />
 			</button>
 			<h1 className='text-slate-300 font-semibold pb-5'>
-				If you do not know how to play please check out the original.
+				If you do not know how to play please check out the original
 			</h1>
 			<a
 				href='https://www.powerlanguage.co.uk/wordle/'
