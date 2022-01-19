@@ -20,23 +20,7 @@ function App() {
 	const thirdRow = ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
 
 	const closeModal = () => {
-		let randomWord = words[Math.floor(Math.random() * words.length)]
-		setCurrentWord(randomWord)
-
-		let checkHash = {}
-
-		for (const char of randomWord.split('')) {
-			checkHash[char] = (checkHash[char] || 0) + 1
-		}
-
-		if (Object.keys(checkHash).length !== 5) {
-			setRepeat(true)
-		}
-
-		setModalIsOpen(false)
-		setCurrentGuess('')
-		setGuesses([''])
-		setGameStatus('')
+		window.location.reload(false)
 	}
 
 	useEffect(() => {
