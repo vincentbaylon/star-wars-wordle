@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react'
+import Modal from './Modal'
 import './App.css'
 import words from './Words'
 import letters from './Letters'
 
 function App() {
+	const [modalIsOpen, setModalIsOpen] = useState(false)
 	const [currentWord, setCurrentWord] = useState('')
 	const [currentGuess, setCurrentGuess] = useState('')
 	const [guesses, setGuesses] = useState([currentGuess])
 	const [gameStatus, setGameStatus] = useState('')
+	const [repeat, setRepeat] = useState(false)
 
 	const firstRow = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P']
 	const secondRow = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L']
@@ -16,7 +19,27 @@ function App() {
 	useEffect(() => {
 		let randomWord = words[Math.floor(Math.random() * words.length)]
 		setCurrentWord(randomWord)
+
+		let checkHash = {}
+
+		for (const char of randomWord.split('')) {
+			checkHash[char] = (checkHash[char] || 0) + 1
+		}
+
+		if (Object.keys(checkHash).length !== 5) {
+			setRepeat(true)
+		}
 	}, [])
+
+	useEffect(() => {
+		if (gameStatus !== '') {
+			setModalIsOpen(true)
+		}
+	}, [gameStatus])
+
+	const closeModal = () => {
+		setModalIsOpen(false)
+	}
 
 	const handleDelete = () => {
 		if (gameStatus === '') {
@@ -46,7 +69,6 @@ function App() {
 							colors = colors.split('')
 							colors[i] = 'G'
 							colors = colors.join('')
-							console.log('G', colors)
 						}
 					}
 
@@ -60,12 +82,10 @@ function App() {
 							colors = colors.split('')
 							colors[i] = 'Y'
 							colors = colors.join('')
-							console.log('Y', colors)
 						} else if (colors[i] === 'W' && hash[currentGuess[i]] === 0) {
 							colors = colors.split('')
 							colors[i] = 'S'
 							colors = colors.join('')
-							console.log('Z', colors)
 						} else if (
 							colors[i] === 'W' &&
 							currentWord.indexOf(currentGuess[i]) === -1
@@ -74,13 +94,10 @@ function App() {
 							colors = colors.split('')
 							colors[i] = 'S'
 							colors = colors.join('')
-							console.log('S', colors)
 						}
 					}
-					console.log(colors)
 					setGuesses([...guesses, `${currentGuess}-${colors}`])
 					setCurrentGuess('')
-					console.log(guesses)
 				}
 			}
 		}
@@ -92,7 +109,11 @@ function App() {
 		}
 	}
 
-	useEffect(() => {}, [gameStatus])
+	useEffect(() => {
+		if (guesses.length === 7 && gameStatus === '') {
+			setGameStatus('LOSS')
+		}
+	}, [guesses])
 
 	useEffect(() => {
 		const listener = (e) => {
@@ -167,14 +188,17 @@ function App() {
 		)
 	})
 
-	const displayCurrentRow = [currentGuess].map((t) => {
-		return (
-			<div key={t} className='flex flex-row gap-1'>
-				{displayTiles}
-				{displayEmptyTiles}
-			</div>
-		)
-	})
+	const displayCurrentRow =
+		guesses.length < 7
+			? [currentGuess].map((t) => {
+					return (
+						<div key={t} className='flex flex-row gap-1'>
+							{displayTiles}
+							{displayEmptyTiles}
+						</div>
+					)
+			  })
+			: null
 
 	const displayRows = guesses.map((g, i) => {
 		let split = ['']
@@ -219,15 +243,19 @@ function App() {
 		)
 	})
 
-	const emptyRows = Array.from(Array(6 - guesses.length))
+	const emptyRows =
+		guesses.length < 7 ? Array.from(Array(6 - guesses.length)) : null
 
-	const displayEmptyRows = emptyRows.map((_, i) => {
-		return (
-			<div key={i} className='flex flex-row gap-1'>
-				{displayOnlyEmptyTiles}
-			</div>
-		)
-	})
+	const displayEmptyRows =
+		guesses.length < 7
+			? emptyRows.map((_, i) => {
+					return (
+						<div key={i} className='flex flex-row gap-1'>
+							{displayOnlyEmptyTiles}
+						</div>
+					)
+			  })
+			: null
 
 	const displayRow = (row) =>
 		row.map((e) => {
@@ -283,6 +311,22 @@ function App() {
 			<h1 className='p-5 text-xl md:text-4xl font-bold text-slate-300 absolute top-0'>
 				STAR WARS WORDLE
 			</h1>
+			{repeat ? (
+				<h1 className='p-5 text-md md:text-lg font-medium text-slate-400 absolute top-14'>
+					Two or more characters of current word repeat.
+				</h1>
+			) : null}
+			{modalIsOpen ? (
+				<div className='absolute top-20'>
+					<Modal
+						closeModal={closeModal}
+						gameStatus={gameStatus}
+						currentWord={currentWord}
+						guesses={guesses}
+					/>
+				</div>
+			) : null}
+
 			<div className='flex items-center h-full absolute'>
 				<div className='flex flex-col gap-1'>
 					{displayRows}
